@@ -1,0 +1,15 @@
+bigdata/deserializers/VehicleInfoDeserializer.class
+bigdata/analytics/LaneAggregator.class
+bigdata/pojo/PollutionData.class
+bigdata/analytics/LaneAnalyzer$1.class
+bigdata/deserializers/PollutionDataSerializer.class
+bigdata/App$2.class
+bigdata/App.class
+bigdata/analytics/CountVehiclesOnLane.class
+bigdata/pojo/TrafficData.class
+bigdata/analytics/LaneAnalyzer.class
+bigdata/deserializers/TrafficDataSerializer.class
+bigdata/deserializers/EmissionInfoDeserializer.class
+bigdata/pojo/VehicleInfo.class
+bigdata/App$1.class
+bigdata/pojo/EmissionInfo.class

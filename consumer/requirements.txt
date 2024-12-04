@@ -1,0 +1,3 @@
+python-dotenv
+confluent-kafka
+cassandra-driver

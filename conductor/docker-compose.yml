@@ -1,0 +1,72 @@
+services:  
+
+  conduktor-console:
+    image: conduktor/conduktor-console:1.29.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    environment:
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
+      CDK_KAFKASQL_DATABASE_URL: "postgresql://conduktor:change_me@postgresql-sql:5432/conduktor-sql"
+      CDK_ORGANIZATION_NAME: "my-kafka-cluster"
+      CDK_CLUSTERS_0_ID: "my-kafka-cluster"
+      CDK_CLUSTERS_0_NAME: "My Kafka Cluster"
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9092"
+      CDK_CLUSTERS_0_COLOR: "#FF5733"
+      CDK_CLUSTERS_0_ICON: "kafka"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      postgresql-2:
+        condition: service_healthy
+
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: "conduktor-console"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgresql-2:
+    image: postgres:14
+    hostname: postgresql-sql
+    volumes:
+      - pg_data_sql:/var/lib/postgresql/data
+    environment:
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: "conduktor-sql"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  conduktor-monitoring:
+    image: conduktor/conduktor-console-cortex:1.29.1
+    environment:
+      CDK_CONSOLE-URL: "http://conduktor-console:8080"
+      
+networks:
+  default:
+    external:
+      name: bde1
+
+volumes:
+  pg_data: {}
+  pg_data_sql: {}
+  conduktor_data: {}
+

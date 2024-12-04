@@ -1,0 +1,20 @@
+docker network create bde1
+docker-compose up -d
+
+docker exec -it kafka /bin/bash
+kafka-topics.sh --create --bootstrap-server localhost:9092 --topic minnhen-fcd
+kafka-topics.sh --create --bootstrap-server localhost:9092 --topic minnhen-emission
+kafka-topics.sh --create --bootstrap-server localhost:9092 --topic minnhen-pollution
+kafka-topics.sh --create --bootstrap-server localhost:9092 --topic minnhen-traffic
+
+kafka-topics.sh --list --bootstrap-server localhost:9092
+
+docker exec -it cassandra /bin/bash
+cqlsh
+use bigdata;
+select * from pollution;
+select * from traffic;
+
+curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"  
+
+mvn clean package
