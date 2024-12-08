@@ -33,7 +33,6 @@ def write_pollution(session, record):
         record.get("LanePMx"),
         record.get("LaneNoise")
     ))
-    print("Data written to Cassandra for pollution table")
 
 
 def write_traffic(session, record):
@@ -51,7 +50,6 @@ def write_traffic(session, record):
 
 
 def handle_message(msg, session):
-    """Processes a single Kafka message and writes to Cassandra."""
     try:
         record = json.loads(msg.value().decode('utf-8'))
         topic = msg.topic()

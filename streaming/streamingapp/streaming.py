@@ -5,11 +5,12 @@ from pyspark.sql import SparkSession
 import os, sys
 from pyspark.sql.functions import current_timestamp, expr,unix_timestamp
 
+kafka_url =  os.getenv('KAFKA_URL')
+
 emission_topic = os.getenv('EMISSION_TOPIC')
 fcd_topic = os.getenv('FCD_TOPIC')
 pollution_topic = os.getenv('POLLUTION_TOPIC')
 traffic_topic = os.getenv('TRAFFIC_TOPIC')
-kafka_url =  os.getenv('KAFKA_URL')
 
 window_duration = os.getenv('WINDOW_DURATION')
 window_type = os.getenv('WINDOW_TYPE')
@@ -65,14 +66,10 @@ if __name__ == "__main__":
     else:
         print("Invalid window type. Please choose 'tumbling' or 'sliding'.")
         sys.exit()
-
-    appName="StreamingMinnhenApp"
     
 
-    conf = SparkConf()
-    spark = SparkSession.builder.config(conf=conf).appName(appName).getOrCreate()
+    spark = SparkSession.builder.appName("MinnhenApp").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
-
 
     emission_df = spark.readStream \
         .format("kafka") \

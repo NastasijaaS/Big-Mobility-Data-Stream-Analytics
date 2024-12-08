@@ -13,8 +13,6 @@ ENV CASSANDRA_KEYSPACE bigdata
 ENV POLLUTION_TABLE pollution
 ENV TRAFFIC_TABLE traffic
 
-ENV EMISSION_TOPIC "minnhen-emission"
-ENV FCD_TOPIC "minnhen-fcd"
 ENV POLLUTION_TOPIC "minnhen-pollution"
 ENV TRAFFIC_TOPIC "minnhen-traffic"
 ENV KAFKA_URL "kafka:9092"

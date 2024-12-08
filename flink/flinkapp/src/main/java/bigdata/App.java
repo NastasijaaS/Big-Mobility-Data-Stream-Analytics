@@ -32,6 +32,7 @@ import java.util.Date;
 public class App {
 
     static String kafka_url = "kafka:9092";
+	
     static String emission_topic = "minnhen-emission";
     static String pollution_topic = "minnhen-pollution";
     static String fcd_topic = "minnhen-fcd";
@@ -39,7 +40,7 @@ public class App {
 
     static String window_type = "tumbling";
     static int window_duration = 2;
-    static int slide_duration = 30;
+    static int slide_duration = 40;
     
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
